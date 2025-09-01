@@ -53,6 +53,61 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
+## PROGRAM:
+# client.py
+```
+
+import socket
+
+
+s = socket.socket()
+s.connect(('localhost', 8000))
+
+data = s.recv(1024).decode()
+print("Date and Time from server:", data)
+
+s.send("acknowledgement recieved from the server".encode())
+
+s.close()
+```
+
+# server.py
+```
+import socket
+from datetime import datetime
+
+
+s = socket.socket()
+s.bind(('localhost', 8000))
+s.listen(5)
+
+print("Server is listening...")
+c, addr = s.accept()
+
+print("Client Address :", addr)
+
+
+now = datetime.now()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
+
+
+ack = c.recv(1024).decode()
+if ack:
+    print(ack)
+
+c.close()
+```
+
+## OUTPUT:
+
+# client.py
+
+<img width="533" height="89" alt="image" src="https://github.com/user-attachments/assets/88d66839-14e5-4f67-8f9f-714e35b5dab0" />
+
+# server.py
+
+<img width="506" height="127" alt="image" src="https://github.com/user-attachments/assets/048c9111-0a55-47ba-ace7-7a2f48143af9" />
+
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
